@@ -6,6 +6,8 @@ Ce fork conserve le module `app`, le package `app.mg4dash`, les services véhicu
 
 Construire les APK avec `bash gradlew :app:assembleCarRelease :app:assembleEmulatorDebug`. Le car release doit être signé avec la clé plateforme compatible avant tout essai sur véhicule. Aucun essai sur SWI69 R45 ni remplacement de son accueil n’a eu lieu. Voir [installation](docs/INSTALL.md), [tests](docs/TESTING.md), [architecture](docs/ARCHITECTURE.md), [audit](docs/FEASIBILITY.md) et [sécurité](docs/SAFETY.md).
 
+APK du fork : [télécharger la préversion signée](https://github.com/G-eraldo/MG4Dash-Tesla/releases/download/fork1/MG4Dash-1.7.1-beta19-mg4custom1.apk). SHA-256 : `9c29107d111195f9ab36729fd743ba7ddf88b114b28639809af3ff159926acf0`. Le fichier est à tester d’abord sans remplacer l’accueil SAIC.
+
 ---
 
 Full-screen launcher for the MG4 and its 1920 × 720 screen, for every head unit firmware (SWI69, SWI131/132/173, SWI68, SWI133, SWI165; see [Compatibility](#compatibility-beta)). It replaces the stock home screen with one dashboard (climate, battery, map, weather, media) and adds Climate, Energy, Vehicle, Sound and Phone pages, in dark, light or automatic mode following the car's lights.
