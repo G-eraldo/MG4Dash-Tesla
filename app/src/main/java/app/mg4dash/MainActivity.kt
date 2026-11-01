@@ -14,6 +14,7 @@ import app.mg4dash.pages.VehicleActivity
 import app.mg4dash.ui.Fullscreen
 import app.mg4dash.ui.Dock
 import app.mg4dash.ui.SimpleHome
+import app.mg4dash.ui.CustomHome
 import android.provider.Settings
 import android.util.TypedValue
 import android.view.Gravity
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private var mapLayout = false
     private var themeSig = 0
     private var simple: SimpleHome? = null
+    private var customHome: CustomHome? = null
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +61,14 @@ class MainActivity : AppCompatActivity() {
         prefs = Prefs(this)
         app.mg4dash.ui.Themes.apply(this)
         themeSig = app.mg4dash.ui.Themes.signature(this)
+        if (prefs.homeStyle == 3) {
+            val home = CustomHome(this)
+            customHome = home
+            setContentView(home.view)
+            home.start()
+            warmUpStockLauncherIfNeeded()
+            return
+        }
         // Sièges chauffants lus après la construction de l'écran (redémarrage de l'appli) : on reconstruit
         // pour afficher leurs boutons, au lieu d'attendre un retour sur l'accueil (#19).
         lifecycleScope.launch {
@@ -144,6 +154,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         if (isChangingConfigurations && hiddenForMap != null) mapFullOnRecreate = true
+        customHome?.close()
         super.onDestroy()
     }
 
@@ -306,6 +317,12 @@ class MainActivity : AppCompatActivity() {
         CarBridge.setForeground(true)
         // MG4Dash n'avait pas démarré et l'appli de secours est intervenue : on le dit une fois
         app.mg4dash.system.Rescue.notice?.let { app.mg4dash.system.Rescue.notice = null; app.mg4dash.ui.Toasts.show(this, it, long = true) }
+        if (customHome != null) {
+            if (prefs.homeStyle != 3 || app.mg4dash.ui.Themes.signature(this) != themeSig) { app.mg4dash.ui.Themes.recreateSmooth(this); return }
+            Fullscreen.apply(this)
+            return
+        }
+        if (prefs.homeStyle == 3) { app.mg4dash.ui.Themes.recreateSmooth(this); return }
         // Style d'accueil changé dans les paramètres : on reconstruit l'écran
         if ((prefs.homeStyle == 1) != simpleMode || (prefs.homeStyle == 2) != mapLayout || Dock.vertical(this) != builtVertical || prefs.hideTitles != builtHideTitles ||
             CarBridge.heatingShown(this) != builtHeating || (!simpleMode && cardPower != builtCardPower) ||
@@ -334,6 +351,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         CarBridge.setForeground(false)
+        if (customHome != null) return
         // (le plein écran de la carte n'est plus quitté ici : la barre le fait en ouvrant une page, et
         // une reconstruction (thème) ou l'appli de la carte qui prend la main ne doivent pas le quitter)
         if (!simpleMode) mapCard.onPause()
@@ -343,6 +361,7 @@ class MainActivity : AppCompatActivity() {
     /** HOME pressé alors qu'on est déjà l'accueil : on ne recrée rien, la carte reprend sa taille de widget. */
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        if (customHome != null) return
         if (!simpleMode) setMapFullscreen(false)
         if (intent?.getBooleanExtra(app.mg4dash.ui.Tutorial.EXTRA_SHOW, false) == true) b.root.post { app.mg4dash.ui.Tutorial.show(this) }
     }

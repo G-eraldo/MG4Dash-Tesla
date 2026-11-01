@@ -49,6 +49,8 @@ object UpdatePrompt {
             if (shownIn?.get() !== activity && activity is LifecycleOwner) show(activity, r)
             return
         }
+        // Une release amont écraserait le thème du fork ; la vérification manuelle reste disponible.
+        if (BuildConfig.VERSION_NAME.contains("-mg4custom")) return
         if (checked || !StatusMonitor.hasInternet(activity)) return
         checked = true
         val owner = activity as? LifecycleOwner ?: return

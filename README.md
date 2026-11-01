@@ -1,5 +1,13 @@
 # MG4Dash
 
+## Variante locale MG4 Custom
+
+Ce fork conserve le module `app`, le package `app.mg4dash`, les services véhicule, HomeSwitcher, le mode maintenance, la protection contre les crashs et Rescue. Le style Tesla est une couche de présentation de `MainActivity`, sélectionnable dans les réglages. Il lit `CarBridge` et `MediaHub` et ouvre les pages MG4Dash existantes. La préférence One Pedal est un rappel local sans commande automatique.
+
+Construire les APK avec `bash gradlew :app:assembleCarRelease :app:assembleEmulatorDebug`. Le car release doit être signé avec la clé plateforme compatible avant tout essai sur véhicule. Aucun essai sur SWI69 R45 ni remplacement de son accueil n’a eu lieu. Voir [installation](docs/INSTALL.md), [tests](docs/TESTING.md), [architecture](docs/ARCHITECTURE.md), [audit](docs/FEASIBILITY.md) et [sécurité](docs/SAFETY.md).
+
+---
+
 Full-screen launcher for the MG4 and its 1920 × 720 screen, for every head unit firmware (SWI69, SWI131/132/173, SWI68, SWI133, SWI165; see [Compatibility](#compatibility-beta)). It replaces the stock home screen with one dashboard (climate, battery, map, weather, media) and adds Climate, Energy, Vehicle, Sound and Phone pages, in dark, light or automatic mode following the car's lights.
 
 Languages: English (default), French, German, Spanish, Italian, Dutch and Turkish, following the car's system language. Units: km and kWh/100 km or miles and mi/kWh (following the car or set by hand), tyre pressure in bar, psi or kPa.

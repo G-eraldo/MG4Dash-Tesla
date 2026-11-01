@@ -7,14 +7,15 @@ android {
     namespace = "app.mg4dash"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "app.mg4dash"
         minSdk = 28
         // Cible Android 9 comme le reste du système : pas de restrictions d'arrière-plan
         // ni de permissions d'exécution à gérer pour une appli au uid système.
         targetSdk = 28
-        versionCode = 231
-        versionName = "1.7.1-beta19"
+        versionCode = 232
+        versionName = "1.7.1-beta19-mg4custom1"
     }
 
     flavorDimensions += "target"

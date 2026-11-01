@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>MG4Dash — thème Tesla</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="mark">MG</span><strong>MG4</strong><span class="demo">CHARGEMENT</span></div>
+      <div class="clock"><strong id="clock">--:--</strong><span id="date">—</span></div>
+      <div class="top-right"><span>Météo indisponible</span><span class="signal" aria-hidden="true">◌</span><button id="settingsButton" class="icon-button" aria-label="Préférences">⚙</button></div>
+    </header>
+    <div class="workspace">
+      <nav class="rail" aria-label="Navigation principale">
+        <button id="driveButton" class="rail-button active" aria-label="Vue conduite">⌂</button>
+        <button id="parkButton" class="rail-button" aria-label="Vue stationnement">▣</button>
+        <span class="rail-spacer"></span>
+        <button id="infoButton" class="rail-button" aria-label="Informations">ⓘ</button>
+      </nav>
+      <section class="main-stage" aria-label="État du véhicule">
+        <div class="stage-top"><div><span class="eyebrow" id="stageMode">VUE CONDUITE · EN ATTENTE</span><h1 id="stageTitle">Votre trajet, en un regard</h1></div><span class="static-label">Illustration statique · aucune détection de voie</span></div>
+        <div class="road-scene" aria-hidden="true">
+          <div class="horizon"></div><div class="road"></div><div class="road-line left"></div><div class="road-line right"></div>
+          <svg class="car" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Silhouette illustrative d'une voiture">
+            <defs><linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e5edf6"/><stop offset=".52" stop-color="#9caec4"/><stop offset="1" stop-color="#4d6177"/></linearGradient><linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#071421"/><stop offset="1" stop-color="#30445c"/></linearGradient></defs>
+            <ellipse cx="200" cy="233" rx="153" ry="16" fill="#020713" opacity=".65"/>
+            <path d="M80 89Q95 43 148 30H252Q305 43 320 89L347 130Q357 142 351 198L329 218H71L49 198Q43 142 53 130Z" fill="url(#body)" stroke="#dbe5ee" stroke-width="3"/>
+            <path d="M112 91Q124 51 153 47H247Q276 51 288 91Z" fill="url(#glass)" stroke="#60768d" stroke-width="4"/>
+            <path d="M57 140Q200 169 343 140" fill="none" stroke="#51677e" stroke-width="5"/>
+            <path d="M60 153L138 166L124 182L58 175Z" fill="#f53042"/><path d="M340 153L262 166L276 182L342 175Z" fill="#f53042"/>
+            <path d="M138 172H262" stroke="#e03b47" stroke-width="5"/><path d="M110 203H290" stroke="#263749" stroke-width="6"/>
+            <path d="M78 211V232H119V214M281 214V232H322V211" fill="#121b27"/><rect x="159" y="192" width="82" height="24" rx="5" fill="#1d2938"/><text x="200" y="209" text-anchor="middle" fill="#dce5eb" font-size="12" font-family="sans-serif">MG4</text>
+          </svg>
+        </div>
+        <div class="stage-info left-info"><div class="speed"><strong id="speed">—</strong><span>km/h</span></div><p>Vitesse MG4Dash</p><div class="gear" id="gear">—</div></div>
+        <div class="stage-info battery-info"><div class="battery-ring"><span id="battery">—</span><small>% batterie</small></div><div class="metrics"><div><span>Autonomie estimée</span><strong id="range">—</strong></div><div><span>Consommation</span><strong id="consumption">—</strong></div><div><span>Puissance instantanée</span><strong id="power">—</strong></div></div></div>
+        <div class="stage-bottom"><span>Les instruments MG restent la référence pour la conduite.</span><span id="sourceLabel">Données en attente</span></div>
+      </section>
+      <aside class="side" aria-label="Services et raccourcis">
+        <section class="card navigation"><div class="card-title"><span class="glyph">➤</span><div><h2>Navigation</h2><p>Applications installées</p></div></div><div class="map-art" aria-hidden="true"><div class="map-grid"></div><div class="map-path"></div><span class="map-pin">⌖</span></div><button class="card-foot" data-page="navigation">Ouvrir les applications</button></section>
+        <section class="card media"><div class="card-title"><span class="album">♫</span><div><h2 id="mediaTitle">Média</h2><p id="mediaArtist">Aucune source</p></div></div><div class="placeholder"><button data-media="previous" aria-label="Précédent">◀</button><button data-media="playPause" aria-label="Lecture ou pause">⏯</button><button data-media="next" aria-label="Suivant">▶</button></div></section>
+        <section class="card climate"><div class="card-title"><span class="glyph">❄</span><div><h2>Climatisation</h2><p>Commandes MG4Dash existantes</p></div></div><button class="climate-value" data-page="climate">Ouvrir la climatisation</button></section>
+        <section class="card ha"><div class="card-title"><span class="glyph">⌂</span><div><h2>Raccourcis</h2><p>Réglages et services MG4Dash</p></div></div><div class="ha-grid"><button data-page="vehicle">Véhicule</button><button data-page="energy">Énergie</button><button data-page="apps">Applications</button><button data-page="laneSettings">Réglages MG<br><small>via Véhicule</small></button></div></section>
+      </aside>
+    </div>
+    <div class="drawer hidden" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><div class="drawer-panel"><button id="closeDrawer" class="close" aria-label="Fermer">×</button><span class="eyebrow">PRÉFÉRENCES LOCALES</span><h2 id="drawerTitle">One Pedal</h2><p>Conserver un rappel de votre préférence entre les trajets. Cette application n'active jamais la fonction sur le véhicule.</p><label class="toggle"><input type="checkbox" id="onePedalPreference"><span>Je préfère One Pedal activé</span></label><div class="status-row"><span>État observé</span><strong id="onePedalStatus">État inconnu</strong></div><div class="status-row"><span>Réactivation automatique</span><strong>Désactivée</strong></div><p class="note">La disponibilité et les conditions de fonctionnement doivent être vérifiées sur SWI69 R45 à l'arrêt.</p></div></div>
+  </main>
+  <script src="state.js"></script><script src="preferences.js"></script><script src="app.js"></script>
+</body>
+</html>

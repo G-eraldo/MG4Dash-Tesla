@@ -99,7 +99,7 @@ class SettingsActivity : AppCompatActivity() {
         // ════ Onglet Accueil : disposition et carte ════
         val style = panel(homeL, getString(R.string.st_style))
         text(style, getString(R.string.st_style_desc), 16f, R.color.text_title)
-        row(style, *styleButtons(listOf(R.string.st_style_full, R.string.st_style_simple, R.string.st_style_map), { prefs.homeStyle }) { prefs.homeStyle = it })
+        row(style, *styleButtons(listOf(R.string.st_style_full, R.string.st_style_simple, R.string.st_style_map, R.string.st_style_custom), { prefs.homeStyle }) { prefs.homeStyle = it })
         // Barre des menus : en bas, ou verticale du côté conducteur (lu sur la voiture), à gauche ou à droite (#75)
         dropdown(style, getString(R.string.st_bar), listOf(R.string.st_bar_bottom, R.string.st_bar_auto, R.string.st_bar_left, R.string.st_bar_right).map { getString(it) },
             { if (!prefs.verticalDock) 0 else 1 + prefs.barSide.coerceIn(0, 2) }) {
