@@ -319,6 +319,7 @@ class MainActivity : AppCompatActivity() {
         app.mg4dash.system.Rescue.notice?.let { app.mg4dash.system.Rescue.notice = null; app.mg4dash.ui.Toasts.show(this, it, long = true) }
         if (customHome != null) {
             if (prefs.homeStyle != 3 || app.mg4dash.ui.Themes.signature(this) != themeSig) { app.mg4dash.ui.Themes.recreateSmooth(this); return }
+            customHome?.onResume()
             Fullscreen.apply(this)
             return
         }
@@ -351,7 +352,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         CarBridge.setForeground(false)
-        if (customHome != null) return
+        if (customHome != null) { customHome?.onPause(); return }
         // (le plein écran de la carte n'est plus quitté ici : la barre le fait en ouvrant une page, et
         // une reconstruction (thème) ou l'appli de la carte qui prend la main ne doivent pas le quitter)
         if (!simpleMode) mapCard.onPause()

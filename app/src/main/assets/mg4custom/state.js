@@ -5,7 +5,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  const unknown = Object.freeze({ speedKmh: null, batteryPercent: null, rangeKm: null,
+  const unknown = Object.freeze({ connected: false, speedKmh: null, speedRawKmh: null, batteryPercent: null, rangeKm: null,
     consumption: null, powerKw: null, gear: null, onePedal: null, onePedalAvailable: null,
     haOnline: false, mediaAvailable: false });
 
@@ -25,5 +25,14 @@
     return value === null || value === undefined || Number.isNaN(value) ? '—' : String(value).replace('.', ',') + (suffix || '');
   }
 
-  return { unknown, onePedalStatus, canUseDomesticControl, displayValue };
+  /** Le service amont n'expose pas le rapport P/D : la vitesse ne pilote que la présentation. */
+  function nextViewMode(previous, speedKmh, connected, lastMotionAt, now) {
+    if (!connected) return { mode: 'parked', lastMotionAt: null };
+    if (typeof speedKmh === 'number' && speedKmh > 3) return { mode: 'driving', lastMotionAt: now };
+    if (previous === 'driving' && speedKmh === 0 && lastMotionAt !== null && now - lastMotionAt > 120000)
+      return { mode: 'parked', lastMotionAt: null };
+    return { mode: previous, lastMotionAt };
+  }
+
+  return { unknown, onePedalStatus, canUseDomesticControl, displayValue, nextViewMode };
 });

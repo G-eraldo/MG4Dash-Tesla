@@ -4,51 +4,64 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
-  <title>MG4Dash — thème Tesla</title>
+  <title>MG4Dash — accueil personnalisé</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
-      <div class="brand"><span class="mark">MG</span><strong>MG4</strong><span class="demo">CHARGEMENT</span></div>
+      <div class="brand"><span class="mg-mark">MG</span><strong>MG4</strong></div>
       <div class="clock"><strong id="clock">--:--</strong><span id="date">—</span></div>
-      <div class="top-right"><span>Météo indisponible</span><span class="signal" aria-hidden="true">◌</span><button id="settingsButton" class="icon-button" aria-label="Préférences">⚙</button></div>
+      <div class="status"><span id="outside">Temp. ext. —</span><span class="connection" id="connection">Données en attente</span><button class="profile" data-page="settings" aria-label="Réglages">♙</button></div>
     </header>
     <div class="workspace">
-      <nav class="rail" aria-label="Navigation principale">
-        <button id="driveButton" class="rail-button active" aria-label="Vue conduite">⌂</button>
-        <button id="parkButton" class="rail-button" aria-label="Vue stationnement">▣</button>
-        <span class="rail-spacer"></span>
-        <button id="infoButton" class="rail-button" aria-label="Informations">ⓘ</button>
+      <nav class="rail" aria-label="Pages MG4Dash">
+        <button class="rail-button selected" aria-label="Accueil" title="Accueil">⌂</button>
+        <button class="rail-button" data-page="navigation" aria-label="Navigation" title="Navigation">➤</button>
+        <button class="rail-button" data-page="media" aria-label="Médias" title="Médias">♫</button>
+        <button class="rail-button" data-page="phone" aria-label="Téléphone" title="Téléphone">☎</button>
+        <button class="rail-button" data-page="apps" aria-label="Applications" title="Applications">▦</button>
+        <button class="rail-button" data-page="vehicle" aria-label="Véhicule" title="Véhicule">⌂</button>
       </nav>
-      <section class="main-stage" aria-label="État du véhicule">
-        <div class="stage-top"><div><span class="eyebrow" id="stageMode">VUE CONDUITE · EN ATTENTE</span><h1 id="stageTitle">Votre trajet, en un regard</h1></div><span class="static-label">Illustration statique · aucune détection de voie</span></div>
-        <div class="road-scene" aria-hidden="true">
-          <div class="horizon"></div><div class="road"></div><div class="road-line left"></div><div class="road-line right"></div>
-          <svg class="car" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Silhouette illustrative d'une voiture">
-            <defs><linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e5edf6"/><stop offset=".52" stop-color="#9caec4"/><stop offset="1" stop-color="#4d6177"/></linearGradient><linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#071421"/><stop offset="1" stop-color="#30445c"/></linearGradient></defs>
-            <ellipse cx="200" cy="233" rx="153" ry="16" fill="#020713" opacity=".65"/>
-            <path d="M80 89Q95 43 148 30H252Q305 43 320 89L347 130Q357 142 351 198L329 218H71L49 198Q43 142 53 130Z" fill="url(#body)" stroke="#dbe5ee" stroke-width="3"/>
-            <path d="M112 91Q124 51 153 47H247Q276 51 288 91Z" fill="url(#glass)" stroke="#60768d" stroke-width="4"/>
-            <path d="M57 140Q200 169 343 140" fill="none" stroke="#51677e" stroke-width="5"/>
-            <path d="M60 153L138 166L124 182L58 175Z" fill="#f53042"/><path d="M340 153L262 166L276 182L342 175Z" fill="#f53042"/>
-            <path d="M138 172H262" stroke="#e03b47" stroke-width="5"/><path d="M110 203H290" stroke="#263749" stroke-width="6"/>
-            <path d="M78 211V232H119V214M281 214V232H322V211" fill="#121b27"/><rect x="159" y="192" width="82" height="24" rx="5" fill="#1d2938"/><text x="200" y="209" text-anchor="middle" fill="#dce5eb" font-size="12" font-family="sans-serif">MG4</text>
-          </svg>
+      <section class="parked-view" aria-label="Accueil à l’arrêt">
+        <div class="parked-car panel">
+          <div class="park-speed"><strong id="parkSpeed">—</strong><span class="speed-unit">km/h</span><small>À l’arrêt</small></div>
+          <div class="park-scene-label">Illustration MG4</div>
         </div>
-        <div class="stage-info left-info"><div class="speed"><strong id="speed">—</strong><span>km/h</span></div><p>Vitesse MG4Dash</p><div class="gear" id="gear">—</div></div>
-        <div class="stage-info battery-info"><div class="battery-ring"><span id="battery">—</span><small>% batterie</small></div><div class="metrics"><div><span>Autonomie estimée</span><strong id="range">—</strong></div><div><span>Consommation</span><strong id="consumption">—</strong></div><div><span>Puissance instantanée</span><strong id="power">—</strong></div></div></div>
-        <div class="stage-bottom"><span>Les instruments MG restent la référence pour la conduite.</span><span id="sourceLabel">Données en attente</span></div>
+        <div class="battery-card panel clickable" data-page="energy" role="button" tabindex="0" aria-label="Ouvrir la page Énergie">
+          <div class="battery-head"><span class="battery-icon">▣</span><strong id="parkBattery">—</strong><span>%</span></div>
+          <div class="battery-track"><span id="batteryFill"></span></div>
+          <div class="battery-footer"><div><span class="metric-icon">▰</span><div><strong id="parkRange">—</strong><small>Autonomie estimée</small></div></div><div><span class="metric-icon">ϟ</span><div><strong id="parkAvg">—</strong><small>Conso. moyenne</small></div></div></div>
+        </div>
+        <section class="consumption-card panel">
+          <div class="card-head"><h2>◌&nbsp; Consommation</h2><div class="segments"><button data-period="1">Trajet</button><button data-period="0">Recharge</button><button data-period="2">12 mois</button></div></div>
+          <button class="chart-button" data-page="energy" aria-label="Ouvrir la page Énergie"><svg class="chart" viewBox="0 0 340 120" preserveAspectRatio="none" aria-hidden="true"><path class="gridline" d="M0 20H340 M0 60H340 M0 100H340"/><polyline id="chartLine" points=""/></svg><span id="chartEmpty">Courbe en attente</span></button>
+          <div class="chart-bottom"><span id="chartPeriod">Depuis le trajet</span><strong id="chartAverage">—</strong></div>
+        </section>
+        <section class="climate-card panel">
+          <div class="card-head"><button class="card-title-button" data-page="climate">✥&nbsp; Climatisation</button><button class="power-button" data-climate="power" aria-label="Allumer ou éteindre la climatisation">⏻</button></div>
+          <div class="temperature"><button data-climate="tempDown" aria-label="Baisser la température">−</button><strong id="parkTemp">—</strong><button data-climate="tempUp" aria-label="Augmenter la température">+</button></div>
+          <div class="climate-actions"><button data-climate="auto">AUTO</button><button data-climate="recirc" aria-label="Recyclage d’air">♧</button><button data-climate="ac">A/C</button><button data-climate="front" aria-label="Dégivrage avant">▧</button><button data-climate="rear" aria-label="Dégivrage arrière">▤</button></div>
+        </section>
+        <button class="map-card panel" data-page="navigation" aria-label="Ouvrir la navigation"><span class="card-head"><strong>➤&nbsp; Navigation</strong><span class="map-search">⌕&nbsp; Où aller ?</span></span><span class="map-art"><span class="map-route"></span><span class="map-pointer">▲</span></span><small>Ouvrir la navigation</small></button>
+        <section class="shortcuts-card panel"><div class="card-head"><h2>⌂&nbsp; Raccourcis MG4Dash</h2><div class="shortcut-tools"><button data-next-shortcuts aria-label="Autres raccourcis">›</button><button data-edit-shortcuts class="edit-button">Modifier</button></div></div><div class="shortcut-grid" id="parkShortcuts"></div></section>
+        <section class="media-card panel"><div class="media-info"><span class="album">♫</span><button data-page="media" class="media-details"><strong id="parkMediaTitle">Média</strong><small id="parkMediaArtist">Aucune source</small></button></div><div class="media-controls"><button data-media="previous" aria-label="Précédent">◀◀</button><button data-media="playPause" aria-label="Lecture ou pause" class="play" id="parkPlay">▶</button><button data-media="next" aria-label="Suivant">▶▶</button></div><div class="media-progress"></div></section>
       </section>
-      <aside class="side" aria-label="Services et raccourcis">
-        <section class="card navigation"><div class="card-title"><span class="glyph">➤</span><div><h2>Navigation</h2><p>Applications installées</p></div></div><div class="map-art" aria-hidden="true"><div class="map-grid"></div><div class="map-path"></div><span class="map-pin">⌖</span></div><button class="card-foot" data-page="navigation">Ouvrir les applications</button></section>
-        <section class="card media"><div class="card-title"><span class="album">♫</span><div><h2 id="mediaTitle">Média</h2><p id="mediaArtist">Aucune source</p></div></div><div class="placeholder"><button data-media="previous" aria-label="Précédent">◀</button><button data-media="playPause" aria-label="Lecture ou pause">⏯</button><button data-media="next" aria-label="Suivant">▶</button></div></section>
-        <section class="card climate"><div class="card-title"><span class="glyph">❄</span><div><h2>Climatisation</h2><p>Commandes MG4Dash existantes</p></div></div><button class="climate-value" data-page="climate">Ouvrir la climatisation</button></section>
-        <section class="card ha"><div class="card-title"><span class="glyph">⌂</span><div><h2>Raccourcis</h2><p>Réglages et services MG4Dash</p></div></div><div class="ha-grid"><button data-page="vehicle">Véhicule</button><button data-page="energy">Énergie</button><button data-page="apps">Applications</button><button data-page="laneSettings">Réglages MG<br><small>via Véhicule</small></button></div></section>
-      </aside>
+      <section class="driving-view" aria-label="Accueil en marche" hidden>
+        <div class="drive-stage panel">
+          <div class="drive-metrics"><div class="drive-gauge"><span class="gauge-arc"></span><strong id="driveBattery">—</strong><small>Autonomie estimée</small><b id="driveRange">—</b></div><div class="drive-data"><small>Conso. moyenne</small><strong id="driveAvg">—</strong></div><div class="drive-data"><small>Puissance instantanée</small><strong id="drivePower">—</strong></div></div>
+          <div class="drive-speed"><strong id="driveSpeed">—</strong><span class="speed-unit">km/h</span></div>
+          <button class="drive-navigation" data-page="navigation"><span id="navAction">➤&nbsp; Navigation</span><strong id="navDistance">Ouvrir l’itinéraire</strong><small id="navRoad">Guidage dans votre application de navigation</small><span class="mini-map"><i></i><b>▲</b></span></button>
+          <div class="drive-bottom"><span id="driveSource">Données en attente</span><strong>En route</strong></div>
+        </div>
+        <aside class="drive-side">
+          <section class="media-card panel"><div class="media-info"><span class="album">♫</span><button data-page="media" class="media-details"><strong id="driveMediaTitle">Média</strong><small id="driveMediaArtist">Aucune source</small></button></div><div class="media-controls"><button data-media="previous" aria-label="Précédent">◀◀</button><button data-media="playPause" aria-label="Lecture ou pause" class="play" id="drivePlay">▶</button><button data-media="next" aria-label="Suivant">▶▶</button></div><div class="media-progress"></div></section>
+          <section class="drive-climate panel"><button data-page="climate" class="drive-temp"><strong id="driveTemp">—</strong><small>Climatisation</small></button><button data-climate="ac" aria-label="A/C">❄</button><button data-climate="fanUp" aria-label="Augmenter la ventilation">✥</button><button data-page="climate" aria-label="Ouvrir la climatisation">↗</button></section>
+          <section class="shortcuts-card panel"><div class="card-head"><h2>⌂&nbsp; Raccourcis MG4Dash</h2><div class="shortcut-tools"><button data-next-shortcuts aria-label="Autres raccourcis">›</button><button data-edit-shortcuts class="edit-button">Modifier</button></div></div><div class="shortcut-grid" id="driveShortcuts"></div></section>
+        </aside>
+      </section>
     </div>
-    <div class="drawer hidden" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><div class="drawer-panel"><button id="closeDrawer" class="close" aria-label="Fermer">×</button><span class="eyebrow">PRÉFÉRENCES LOCALES</span><h2 id="drawerTitle">One Pedal</h2><p>Conserver un rappel de votre préférence entre les trajets. Cette application n'active jamais la fonction sur le véhicule.</p><label class="toggle"><input type="checkbox" id="onePedalPreference"><span>Je préfère One Pedal activé</span></label><div class="status-row"><span>État observé</span><strong id="onePedalStatus">État inconnu</strong></div><div class="status-row"><span>Réactivation automatique</span><strong>Désactivée</strong></div><p class="note">La disponibilité et les conditions de fonctionnement doivent être vérifiées sur SWI69 R45 à l'arrêt.</p></div></div>
   </main>
-  <script src="state.js"></script><script src="preferences.js"></script><script src="app.js"></script>
+  <script src="state.js"></script><script src="app.js"></script>
 </body>
 </html>

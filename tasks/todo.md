@@ -1,7 +1,12 @@
-# Fork MG4Dash — thème Tesla
+# Accueil personnalisé du fork MG4Dash
 
-- [x] Auditer l’amont, les permissions, la signature et les chemins de récupération.
-- [x] Retirer le module indépendant et intégrer le thème dans `MainActivity`.
-- [x] Relier les mesures, le média et les pages existantes ; conserver One Pedal en préférence sans action.
-- [x] Compiler, signer et inspecter l’APK car final ; exécuter les tests accessibles.
-- [x] Documenter les résultats finaux et les validations sur SWI69 R45.
+- [x] Repartir du dépôt GitHub du fork et auditer l’accueil et ses ponts existants.
+- [x] Reproduire les vues arrêt / marche dans l’accueil principal, avec données et boutons réels.
+- [x] Vérifier la navigation et les états indisponibles sur ordinateur.
+- [x] Compiler, signer et documenter l’APK voiture sans l’installer.
+
+## Publication GitHub
+
+- [x] Revérifier les tests, la signature et le contenu à publier.
+- [x] Publier le code et la documentation sur `main`.
+- [x] Distribuer l’APK `mg4custom3` dans une release et vérifier ses liens et son empreinte.

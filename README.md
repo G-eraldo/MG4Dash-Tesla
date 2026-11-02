@@ -2,11 +2,13 @@
 
 ## Variante locale MG4 Custom
 
-Ce fork conserve le module `app`, le package `app.mg4dash`, les services véhicule, HomeSwitcher, le mode maintenance, la protection contre les crashs et Rescue. Le style Tesla est une couche de présentation de `MainActivity`, sélectionnable dans les réglages. Il lit `CarBridge` et `MediaHub` et ouvre les pages MG4Dash existantes. La préférence One Pedal est un rappel local sans commande automatique.
+Ce fork conserve le module `app`, le package `app.mg4dash`, les services véhicule, HomeSwitcher, le mode maintenance, la protection contre les crashs et Rescue. Son accueil par défaut présente les vues Tesla à l’arrêt et en marche. Les autres pages MG4Dash restent celles du fork. L’accueil lit les données et emploie les commandes existantes de MG4Dash ; les visuels de voiture et de route sont décoratifs.
 
 Construire les APK avec `bash gradlew :app:assembleCarRelease :app:assembleEmulatorDebug`. Le car release doit être signé avec la clé plateforme compatible avant tout essai sur véhicule. Aucun essai sur SWI69 R45 ni remplacement de son accueil n’a eu lieu. Voir [installation](docs/INSTALL.md), [tests](docs/TESTING.md), [architecture](docs/ARCHITECTURE.md), [audit](docs/FEASIBILITY.md) et [sécurité](docs/SAFETY.md).
 
-APK du fork : [télécharger la préversion signée](https://github.com/G-eraldo/MG4Dash-Tesla/releases/download/fork1/MG4Dash-1.7.1-beta19-mg4custom1.apk). SHA-256 : `9c29107d111195f9ab36729fd743ba7ddf88b114b28639809af3ff159926acf0`. Le fichier est à tester d’abord sans remplacer l’accueil SAIC.
+APK de cet accueil : [télécharger `mg4custom3` depuis GitHub](https://github.com/G-eraldo/MG4Dash-Tesla/releases/download/mg4custom3/MG4Dash-1.7.1-beta19-mg4custom3.apk). SHA-256 : `e00a86373fac2811804f1b43525a94e8d645d24bdac4a9244edf3e56685f1418`. La release précédente `fork1` contient encore l’ancien accueil. L’APK doit être testé d’abord sans remplacer l’accueil SAIC. Voir [installation](docs/INSTALL.md) et [tests](docs/TESTING.md).
+
+Prévisualisations sur ordinateur avec données simulées : [à l’arrêt](docs/previews/accueil-arret-simulation.png) · [en marche](docs/previews/accueil-marche-simulation.png). La carte et les services de la voiture restent à vérifier sur SWI69 R45.
 
 ---
 

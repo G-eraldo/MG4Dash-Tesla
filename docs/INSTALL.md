@@ -1,15 +1,15 @@
-# Installation et retour arrière — procédure différée
+# Installation différée — SWI69 R45
 
-**Aucune commande ADB d'installation ou de bascule HOME n'a été lancée.** L'APK `dist/MG4Dash-1.7.1-beta19-mg4custom1.apk` est le fork complet signé avec la clé de test plateforme décrite par l'amont. Il reprend le package `app.mg4dash` et `android.uid.system` ; il ne peut pas être installé à côté de MG4Dash officiel comme seconde application. La compatibilité de cette signature avec le véhicule particulier et le `versionCode` déjà installé restent à mesurer.
+**Aucune installation ni bascule HOME n’a été lancée.** L’APK actuel est [MG4Dash-1.7.1-beta19-mg4custom3.apk](https://github.com/G-eraldo/MG4Dash-Tesla/releases/download/mg4custom3/MG4Dash-1.7.1-beta19-mg4custom3.apk), construit depuis le fork complet. `dist/` n’est pas versionné. GitHub distribue l’APK via sa release ; l’installation de MG4Dash sur l’autoradio suit la procédure ADB de l’amont.
 
-Téléchargement : [APK signé de la préversion `fork1`](https://github.com/G-eraldo/MG4Dash-Tesla/releases/download/fork1/MG4Dash-1.7.1-beta19-mg4custom1.apk). GitHub sert à distribuer le fichier ; l'installation sur la MG4 passe par ADB, selon la procédure amont. L'empreinte attendue est `9c29107d111195f9ab36729fd743ba7ddf88b114b28639809af3ff159926acf0`.
+L’APK actuel garde `app.mg4dash` et `android.uid.system`, avec `versionCode` 233 et le certificat plateforme de test AOSP SHA-256 `c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8`. Il ne peut pas être installé en parallèle de MG4Dash officiel. Une signature différente de celle déjà installée provoquera normalement un refus : ne pas désinstaller une application système pour le contourner. L’empreinte SHA-256 du fichier à utiliser est `e00a86373fac2811804f1b43525a94e8d645d24bdac4a9244edf3e56685f1418`.
 
-## Contrôles avant installation, avec véhicule à l'arrêt et accord distinct
+## Préparation en lecture seule
 
-1. Vérifier sur l'écran SAIC la version exacte SWI69 R45, puis relever sans modification `adb shell getprop ro.build.fingerprint` et `adb shell dumpsys package app.mg4dash` pour connaître version, signature et état installé. Ne pas tenter de mise à jour si la signature diffère ou si le `versionCode` installé est supérieur ou égal à 232 sans plan de migration explicite.
-2. Prévoir un retour vérifié à l'accueil MG et une copie de l'APK précédent. Vérifier la présence de Rescue et que le mode maintenance fonctionne avant toute bascule d'accueil.
-3. Comparer l'empreinte SHA-256 publiée dans `TESTING.md` avec le fichier local. Contrôler `apksigner verify --print-certs` et le certificat `keys/platform.x509.pem`.
-4. Après accord d'installation seulement, suivre la séquence amont depuis le dossier contenant le fichier téléchargé : `adb push MG4Dash-1.7.1-beta19-mg4custom1.apk /data/local/tmp/x.apk`, puis `adb shell pm install -r -f /data/local/tmp/x.apk`, et enfin supprimer `/data/local/tmp/x.apk`. Une erreur de signature/UID impose l'arrêt ; ne pas désinstaller l'app officielle pour contourner l'erreur.
-5. Lancer seulement `adb shell am start -n app.mg4dash/.MainActivity`. Tester le thème et les pages sans sélectionner « Replace SAIC home ». Vérifier la déconnexion caradapter et le retour à l'accueil MG. La bascule HOME constitue une décision ultérieure distincte.
+Voiture immobilisée, confirmer SWI69 R45 à l’écran. Depuis l’ordinateur connecté en ADB, `adb devices` doit afficher un appareil à l’état `device`. Relever ensuite `adb shell getprop ro.build.fingerprint` et `adb shell dumpsys package app.mg4dash`. Comparer les informations de l’application éventuelle avec le paquet, la version et le certificat de cet APK. Si une version supérieure à 233 est déjà présente ou si la signature ne correspond pas, arrêter la procédure et préparer un plan de mise à jour adapté.
 
-Le bouton amont « Maintenance mode » réactive l'accueil SAIC. Le garde crash et Rescue sont conservés, mais leur comportement sur R45 n'est pas prouvé par compilation. La désinstallation directe d'un launcher actif est déconseillée ; utiliser d'abord le mode maintenance. Les instructions amont complètes demeurent dans le `README.md`.
+## Premier essai, seulement après accord d’installation
+
+La séquence amont est `adb push MG4Dash-1.7.1-beta19-mg4custom3.apk /data/local/tmp/x.apk`, puis `adb shell pm install -r -f /data/local/tmp/x.apk`. Attendre `Success`. Supprimer ensuite le fichier temporaire avec `adb shell rm /data/local/tmp/x.apk`. Au moindre refus de signature, d’UID ou de version, s’arrêter. Lancer `adb shell am start -n app.mg4dash/.MainActivity` sans sélectionner « Replace SAIC home ».
+
+Vérifier d’abord les deux vues, les données, les commandes et les autres pages à l’arrêt. Tester le retour à l’accueil MG. La bascule vers MG4Dash comme accueil, puis Maintenance Mode et Rescue, constituent une phase distincte après ces contrôles. Voir [les vérifications détaillées](TESTING.md) et le README amont pour les prérequis et la récupération.
